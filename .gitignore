@@ -1,0 +1,9 @@
+
+# debug files calcevent
+wa/obj
+wa/bin
+wa/Properties
+
+# files 
+packages
+wa.sln
