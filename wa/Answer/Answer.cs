@@ -40,5 +40,18 @@ namespace wa.Answer
             //return "";
         }       
          */
+
+        /*
+        string getResult(int timestamp, string deviceId, int transportStatusID, int oreType, double rockMass)
+        {
+            string _oretype = GetOreType(deviceId, oreType);
+
+            string _result = string.Format("\"timestamp\":{0},\"transportID\":\"{1}\",\"transportStatus\":{2},\"oreType\":{3},\"rockMass\":{4}",
+                timestamp, deviceId, transportStatusID, _oretype, rockMass);
+            string s = string.Join(";", lastInfo[deviceId].Select(x => x.Key + "=" + x.Value).ToArray());
+            TXTWriter.WriteBeforeSave(string.Format("{0}\n",s));
+            return "{" + _result + "}";
+        } 
+         */
     }
 }
