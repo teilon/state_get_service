@@ -106,6 +106,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Answer\Answer.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\EventDefinitionController.cs" />
     <Compile Include="dbMethods\GetFromDB_Transports.cs" />
