@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace wa.daMethods
+namespace wa.dbMethods
 {
-    public static partial class GetFromDB
+    public static partial class WithDB
     {
         public static List<ZoneItem> ToZoneProgress()
         {

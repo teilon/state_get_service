@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'db.dbo.vDumps' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vDumps">
@@ -33,6 +33,15 @@ warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined
           <Property Name="y" Type="float" />
           <Property Name="z" Type="float" />
         </EntityType>
+        <Function Name="SaveEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="truckid" Type="varchar" Mode="In" />
+          <Parameter Name="transportStatusid" Type="varchar" Mode="In" />
+          <Parameter Name="zoneid" Type="varchar" Mode="In" />
+          <Parameter Name="excavatorid" Type="varchar" Mode="In" />
+          <Parameter Name="oretypeid" Type="varchar" Mode="In" />
+          <Parameter Name="oreweight" Type="float" Mode="In" />
+          <Parameter Name="startTimestamp" Type="bigint" Mode="In" />
+        </Function>
         <EntityContainer Name="dbModelStoreContainer">
           <EntitySet Name="vDumps" EntityType="Self.vDumps" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -55,8 +64,7 @@ warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined
     FROM [dbo].[vZones] AS [vZones]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -87,6 +95,15 @@ warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined
         <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="vDumps" EntityType="Self.vDumps" />
           <EntitySet Name="vZones" EntityType="Self.vZones" />
+          <FunctionImport Name="SaveEvent">
+            <Parameter Name="truckid" Mode="In" Type="String" />
+            <Parameter Name="transportStatusid" Mode="In" Type="String" />
+            <Parameter Name="zoneid" Mode="In" Type="String" />
+            <Parameter Name="excavatorid" Mode="In" Type="String" />
+            <Parameter Name="oretypeid" Mode="In" Type="String" />
+            <Parameter Name="oreweight" Mode="In" Type="Double" />
+            <Parameter Name="startTimestamp" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -118,6 +135,7 @@ warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SaveEvent" FunctionName="dbModel.Store.SaveEvent" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

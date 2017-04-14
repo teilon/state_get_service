@@ -12,6 +12,8 @@ namespace wa
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class dbEntities : DbContext
     {
@@ -27,5 +29,38 @@ namespace wa
     
         public virtual DbSet<vDumps> vDumps { get; set; }
         public virtual DbSet<vZones> vZones { get; set; }
+    
+        public virtual int SaveEvent(string truckid, string transportStatusid, string zoneid, string excavatorid, string oretypeid, Nullable<double> oreweight, Nullable<long> startTimestamp)
+        {
+            var truckidParameter = truckid != null ?
+                new ObjectParameter("truckid", truckid) :
+                new ObjectParameter("truckid", typeof(string));
+    
+            var transportStatusidParameter = transportStatusid != null ?
+                new ObjectParameter("transportStatusid", transportStatusid) :
+                new ObjectParameter("transportStatusid", typeof(string));
+    
+            var zoneidParameter = zoneid != null ?
+                new ObjectParameter("zoneid", zoneid) :
+                new ObjectParameter("zoneid", typeof(string));
+    
+            var excavatoridParameter = excavatorid != null ?
+                new ObjectParameter("excavatorid", excavatorid) :
+                new ObjectParameter("excavatorid", typeof(string));
+    
+            var oretypeidParameter = oretypeid != null ?
+                new ObjectParameter("oretypeid", oretypeid) :
+                new ObjectParameter("oretypeid", typeof(string));
+    
+            var oreweightParameter = oreweight.HasValue ?
+                new ObjectParameter("oreweight", oreweight) :
+                new ObjectParameter("oreweight", typeof(double));
+    
+            var startTimestampParameter = startTimestamp.HasValue ?
+                new ObjectParameter("startTimestamp", startTimestamp) :
+                new ObjectParameter("startTimestamp", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SaveEvent", truckidParameter, transportStatusidParameter, zoneidParameter, excavatoridParameter, oretypeidParameter, oreweightParameter, startTimestampParameter);
+        }
     }
 }

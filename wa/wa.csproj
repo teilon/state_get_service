@@ -109,6 +109,7 @@
     <Compile Include="Answer\Answer.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\EventDefinitionController.cs" />
+    <Compile Include="dbMethods\SetToDB_SaveEvent.cs" />
     <Compile Include="dbMethods\GetFromDB_Transports.cs" />
     <Compile Include="dbMethods\GetFromDB_Zones.cs" />
     <Compile Include="Global.asax.cs">

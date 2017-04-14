@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using wa.daMethods;
+using wa.dbMethods;
 
 namespace wa.Controllers
 {
@@ -16,23 +16,28 @@ namespace wa.Controllers
         static string msg_init = "init";
         static string msg_input = "input";
         static string msg_responce = "responce";
+        static bool isTest = true;
 
         [Route("saveeventdata")]
         [HttpGet]
         public void SaveEventData(string input)
         {
+            TXTWriter.Write(string.Format("{0, 10}: {1}\n", msg_input, input));
             if (mr == null)
             {
                 TXTWriter.Write(string.Format("{0, 10}\n", msg_init));
                 mr = new MessageRecipient();
 
-                mr.AddTransportList(GetFromDB.ToTransportProgress());
-                mr.AddZoneList(GetFromDB.ToZoneProgress());
-            }
-            TXTWriter.Write(string.Format("{0, 10}: {1}\n", msg_input, input));
+                mr.AddTransportList(WithDB.ToTransportProgress());
+                mr.AddZoneList(WithDB.ToZoneProgress());
+            }            
             string responce = mr.AddMessage(input);
-
             TXTWriter.Write(string.Format("{0, 10}: {1}\n", msg_responce, responce));
+
+            if (mr.SaveIt && !isTest)
+                WithDB.SaveEvent(mr.OutputDict);
+
+            Answer.Answer.Send(responce);
 
             return;
         }

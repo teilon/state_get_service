@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Device.Location;
 
-namespace wa.daMethods
+namespace wa.dbMethods
 {
-    public static partial class GetFromDB
+    public static partial class WithDB
     {
         public static List<TransportItem> ToTransportProgress()
         {
