@@ -16,7 +16,7 @@ namespace wa.Controllers
         static string msg_init = "init";
         static string msg_input = "input";
         static string msg_responce = "responce";
-        static bool isTest = true;
+        static bool isTest = false;
 
         [Route("saveeventdata")]
         [HttpGet]
@@ -34,10 +34,11 @@ namespace wa.Controllers
             string responce = mr.AddMessage(input);
             TXTWriter.Write(string.Format("{0, 10}: {1}\n", msg_responce, responce));
 
-            if (mr.SaveIt && !isTest)
+            if (mr.SaveIt)// && !isTest
                 WithDB.SaveEvent(mr.OutputDict);
 
-            Answer.Answer.Send(responce);
+            //if(!isTest)
+                Answer.Answer.Send(responce);
 
             return;
         }
