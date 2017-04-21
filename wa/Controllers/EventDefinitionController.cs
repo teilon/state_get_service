@@ -34,10 +34,13 @@ namespace wa.Controllers
             string responce = mr.AddMessage(input);
             TXTWriter.Write(string.Format("{0, 10}: {1}\n", msg_responce, responce));
 
-            if (mr.SaveIt)// && !isTest
+            if (mr.SaveIt && !isTest)
                 WithDB.SaveEvent(mr.OutputDict);
 
-            //if(!isTest)
+            if (!isTest)
+                WithDB.UpdateEvent(mr.UpdateDict);
+
+            if (!isTest)
                 Answer.Answer.Send(responce);
 
             return;

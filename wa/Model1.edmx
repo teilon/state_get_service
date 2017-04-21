@@ -35,12 +35,18 @@ warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined
         </EntityType>
         <Function Name="SaveEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="truckid" Type="varchar" Mode="In" />
-          <Parameter Name="transportStatusid" Type="varchar" Mode="In" />
+          <Parameter Name="statusid" Type="varchar" Mode="In" />
           <Parameter Name="zoneid" Type="varchar" Mode="In" />
           <Parameter Name="excavatorid" Type="varchar" Mode="In" />
           <Parameter Name="oretypeid" Type="varchar" Mode="In" />
           <Parameter Name="oreweight" Type="float" Mode="In" />
           <Parameter Name="startTimestamp" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="spUpdateMSEventData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="imei" Type="varchar" Mode="In" />
+          <Parameter Name="timestamp" Type="bigint" Mode="In" />
+          <Parameter Name="statusCode" Type="int" Mode="In" />
+          <Parameter Name="newStatusCode" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="dbModelStoreContainer">
           <EntitySet Name="vDumps" EntityType="Self.vDumps" store:Type="Views" store:Schema="dbo">
@@ -97,12 +103,18 @@ warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined
           <EntitySet Name="vZones" EntityType="Self.vZones" />
           <FunctionImport Name="SaveEvent">
             <Parameter Name="truckid" Mode="In" Type="String" />
-            <Parameter Name="transportStatusid" Mode="In" Type="String" />
+            <Parameter Name="statusid" Mode="In" Type="String" />
             <Parameter Name="zoneid" Mode="In" Type="String" />
             <Parameter Name="excavatorid" Mode="In" Type="String" />
             <Parameter Name="oretypeid" Mode="In" Type="String" />
             <Parameter Name="oreweight" Mode="In" Type="Double" />
             <Parameter Name="startTimestamp" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="spUpdateMSEventData">
+            <Parameter Name="imei" Mode="In" Type="String" />
+            <Parameter Name="timestamp" Mode="In" Type="Int64" />
+            <Parameter Name="statusCode" Mode="In" Type="Int32" />
+            <Parameter Name="newStatusCode" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
       </Schema>
@@ -136,6 +148,7 @@ warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SaveEvent" FunctionName="dbModel.Store.SaveEvent" />
+          <FunctionImportMapping FunctionImportName="spUpdateMSEventData" FunctionName="dbModel.Store.spUpdateMSEventData" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

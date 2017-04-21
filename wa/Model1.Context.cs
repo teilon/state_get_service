@@ -30,15 +30,15 @@ namespace wa
         public virtual DbSet<vDumps> vDumps { get; set; }
         public virtual DbSet<vZones> vZones { get; set; }
     
-        public virtual int SaveEvent(string truckid, string transportStatusid, string zoneid, string excavatorid, string oretypeid, Nullable<double> oreweight, Nullable<long> startTimestamp)
+        public virtual int SaveEvent(string truckid, string statusid, string zoneid, string excavatorid, string oretypeid, Nullable<double> oreweight, Nullable<long> startTimestamp)
         {
             var truckidParameter = truckid != null ?
                 new ObjectParameter("truckid", truckid) :
                 new ObjectParameter("truckid", typeof(string));
     
-            var transportStatusidParameter = transportStatusid != null ?
-                new ObjectParameter("transportStatusid", transportStatusid) :
-                new ObjectParameter("transportStatusid", typeof(string));
+            var statusidParameter = statusid != null ?
+                new ObjectParameter("statusid", statusid) :
+                new ObjectParameter("statusid", typeof(string));
     
             var zoneidParameter = zoneid != null ?
                 new ObjectParameter("zoneid", zoneid) :
@@ -60,7 +60,28 @@ namespace wa
                 new ObjectParameter("startTimestamp", startTimestamp) :
                 new ObjectParameter("startTimestamp", typeof(long));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SaveEvent", truckidParameter, transportStatusidParameter, zoneidParameter, excavatoridParameter, oretypeidParameter, oreweightParameter, startTimestampParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SaveEvent", truckidParameter, statusidParameter, zoneidParameter, excavatoridParameter, oretypeidParameter, oreweightParameter, startTimestampParameter);
+        }
+    
+        public virtual int spUpdateMSEventData(string imei, Nullable<long> timestamp, Nullable<int> statusCode, Nullable<int> newStatusCode)
+        {
+            var imeiParameter = imei != null ?
+                new ObjectParameter("imei", imei) :
+                new ObjectParameter("imei", typeof(string));
+    
+            var timestampParameter = timestamp.HasValue ?
+                new ObjectParameter("timestamp", timestamp) :
+                new ObjectParameter("timestamp", typeof(long));
+    
+            var statusCodeParameter = statusCode.HasValue ?
+                new ObjectParameter("statusCode", statusCode) :
+                new ObjectParameter("statusCode", typeof(int));
+    
+            var newStatusCodeParameter = newStatusCode.HasValue ?
+                new ObjectParameter("newStatusCode", newStatusCode) :
+                new ObjectParameter("newStatusCode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spUpdateMSEventData", imeiParameter, timestampParameter, statusCodeParameter, newStatusCodeParameter);
         }
     }
 }

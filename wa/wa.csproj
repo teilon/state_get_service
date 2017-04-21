@@ -112,6 +112,7 @@
     <Compile Include="dbMethods\SetToDB_SaveEvent.cs" />
     <Compile Include="dbMethods\GetFromDB_Transports.cs" />
     <Compile Include="dbMethods\GetFromDB_Zones.cs" />
+    <Compile Include="dbMethods\Update_MSEventData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
