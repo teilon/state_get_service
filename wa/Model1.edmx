@@ -21,18 +21,21 @@ warning 6002: The table/view 'db.dbo.vDumps' does not have a primary key defined
           <Property Name="LastLatitude" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vZones">
+warning 6002: The table/view 'db.dbo.vZoneData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vZoneData">
           <Key>
             <PropertyRef Name="ZoneId" />
           </Key>
           <Property Name="ZoneId" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="ZoneName" Type="varchar" MaxLength="40" />
           <Property Name="ZoneTypeId" Type="smallint" />
+          <Property Name="radius" Type="bigint" />
           <Property Name="x" Type="float" />
           <Property Name="y" Type="float" />
           <Property Name="z" Type="float" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Function Name="SaveEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="truckid" Type="varchar" Mode="In" />
           <Parameter Name="statusid" Type="varchar" Mode="In" />
@@ -59,15 +62,16 @@ warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined
     [vDumps].[LastLatitude] AS [LastLatitude]
     FROM [dbo].[vDumps] AS [vDumps]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="vZones" EntityType="Self.vZones" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="vZoneData" EntityType="Self.vZoneData" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [vZones].[ZoneId] AS [ZoneId], 
-    [vZones].[ZoneName] AS [ZoneName], 
-    [vZones].[ZoneTypeId] AS [ZoneTypeId], 
-    [vZones].[x] AS [x], 
-    [vZones].[y] AS [y], 
-    [vZones].[z] AS [z]
-    FROM [dbo].[vZones] AS [vZones]</DefiningQuery>
+    [vZoneData].[ZoneId] AS [ZoneId], 
+    [vZoneData].[ZoneName] AS [ZoneName], 
+    [vZoneData].[ZoneTypeId] AS [ZoneTypeId], 
+    [vZoneData].[radius] AS [radius], 
+    [vZoneData].[x] AS [x], 
+    [vZoneData].[y] AS [y], 
+    [vZoneData].[z] AS [z]
+    FROM [dbo].[vZoneData] AS [vZoneData]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -87,20 +91,8 @@ warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined
           <Property Name="LastLongitude" Type="Double" />
           <Property Name="LastLatitude" Type="Double" />
         </EntityType>
-        <EntityType Name="vZones">
-          <Key>
-            <PropertyRef Name="ZoneId" />
-          </Key>
-          <Property Name="ZoneId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ZoneName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="ZoneTypeId" Type="Int16" />
-          <Property Name="x" Type="Double" />
-          <Property Name="y" Type="Double" />
-          <Property Name="z" Type="Double" />
-        </EntityType>
         <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="vDumps" EntityType="Self.vDumps" />
-          <EntitySet Name="vZones" EntityType="Self.vZones" />
           <FunctionImport Name="SaveEvent">
             <Parameter Name="truckid" Mode="In" Type="String" />
             <Parameter Name="statusid" Mode="In" Type="String" />
@@ -116,7 +108,20 @@ warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined
             <Parameter Name="statusCode" Mode="In" Type="Int32" />
             <Parameter Name="newStatusCode" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="vZoneData" EntityType="dbModel.vZoneData" />
         </EntityContainer>
+        <EntityType Name="vZoneData">
+          <Key>
+            <PropertyRef Name="ZoneId" />
+          </Key>
+          <Property Name="ZoneId" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="ZoneName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ZoneTypeId" Type="Int16" />
+          <Property Name="radius" Type="Int64" />
+          <Property Name="x" Type="Double" />
+          <Property Name="y" Type="Double" />
+          <Property Name="z" Type="Double" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -135,20 +140,21 @@ warning 6002: The table/view 'db.dbo.vZones' does not have a primary key defined
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vZones">
-            <EntityTypeMapping TypeName="dbModel.vZones">
-              <MappingFragment StoreEntitySet="vZones">
-                <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
-                <ScalarProperty Name="ZoneName" ColumnName="ZoneName" />
-                <ScalarProperty Name="ZoneTypeId" ColumnName="ZoneTypeId" />
-                <ScalarProperty Name="x" ColumnName="x" />
-                <ScalarProperty Name="y" ColumnName="y" />
+          <FunctionImportMapping FunctionImportName="SaveEvent" FunctionName="dbModel.Store.SaveEvent" />
+          <FunctionImportMapping FunctionImportName="spUpdateMSEventData" FunctionName="dbModel.Store.spUpdateMSEventData" />
+          <EntitySetMapping Name="vZoneData">
+            <EntityTypeMapping TypeName="dbModel.vZoneData">
+              <MappingFragment StoreEntitySet="vZoneData">
                 <ScalarProperty Name="z" ColumnName="z" />
+                <ScalarProperty Name="y" ColumnName="y" />
+                <ScalarProperty Name="x" ColumnName="x" />
+                <ScalarProperty Name="radius" ColumnName="radius" />
+                <ScalarProperty Name="ZoneTypeId" ColumnName="ZoneTypeId" />
+                <ScalarProperty Name="ZoneName" ColumnName="ZoneName" />
+                <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SaveEvent" FunctionName="dbModel.Store.SaveEvent" />
-          <FunctionImportMapping FunctionImportName="spUpdateMSEventData" FunctionName="dbModel.Store.spUpdateMSEventData" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

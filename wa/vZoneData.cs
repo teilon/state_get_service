@@ -12,11 +12,12 @@ namespace wa
     using System;
     using System.Collections.Generic;
     
-    public partial class vZones
+    public partial class vZoneData
     {
         public string ZoneId { get; set; }
         public string ZoneName { get; set; }
         public Nullable<short> ZoneTypeId { get; set; }
+        public Nullable<long> radius { get; set; }
         public Nullable<double> x { get; set; }
         public Nullable<double> y { get; set; }
         public Nullable<double> z { get; set; }

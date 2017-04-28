@@ -14,11 +14,12 @@ namespace wa.dbMethods
             List<_Zone> _zonelist = new List<_Zone>();
             using (var db = new dbEntities())
             {
-                _zonelist = db.vZones.Select(x => new _Zone()
+                _zonelist = db.vZoneData.Select(x => new _Zone()
                 {
                     ZoneId = x.ZoneId,
                     ZoneName = x.ZoneName,
                     ZoneTypeId = (int)x.ZoneTypeId,
+                    Radius = (x.radius == null) ? 0 : (int)x.radius,
                     x = (double)x.x,
                     y = (double)x.y,
                 }).ToList();
@@ -36,6 +37,7 @@ namespace wa.dbMethods
                     zone = new ZoneItem(z.ZoneId);
                     zone.DisplayName = z.ZoneName;
                     zone.Type = z.ZoneTypeId;
+                    zone.Radius = z.Radius;
                 }
                 if (currentzone == string.Empty)
                 {
@@ -43,6 +45,7 @@ namespace wa.dbMethods
                     zone.Id = z.ZoneId;
                     zone.DisplayName = z.ZoneName;
                     zone.Type = z.ZoneTypeId;
+                    zone.Radius = z.Radius;
                 }
                 zone.AddPoint(z.x, z.y);
             }
@@ -54,6 +57,7 @@ namespace wa.dbMethods
             public string ZoneId;
             public string ZoneName;
             public int ZoneTypeId;
+            public int Radius;
             public double x;
             public double y;
         }

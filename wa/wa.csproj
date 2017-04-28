@@ -107,7 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Answer\Answer.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\WebApiConfig.cs" />
     <Compile Include="Controllers\EventDefinitionController.cs" />
     <Compile Include="dbMethods\SetToDB_SaveEvent.cs" />
     <Compile Include="dbMethods\GetFromDB_Transports.cs" />
@@ -136,7 +136,7 @@
     <Compile Include="vDumps.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="vZones.cs">
+    <Compile Include="vZoneData.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -159,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_Start\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

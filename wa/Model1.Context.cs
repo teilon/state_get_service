@@ -28,7 +28,7 @@ namespace wa
         }
     
         public virtual DbSet<vDumps> vDumps { get; set; }
-        public virtual DbSet<vZones> vZones { get; set; }
+        public virtual DbSet<vZoneData> vZoneData { get; set; }
     
         public virtual int SaveEvent(string truckid, string statusid, string zoneid, string excavatorid, string oretypeid, Nullable<double> oreweight, Nullable<long> startTimestamp)
         {
